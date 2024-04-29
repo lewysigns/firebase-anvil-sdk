@@ -180,6 +180,10 @@ def listen_to_doc(doc_ref,callback):
   l.unsubscribe = proxy_fs.onSnapshot(doc_ref,l._proxy_callback)
   return l
 
+@anvil.js.report_exceptions
+def on_snapshot(query,callback):
+  unsubscribe = proxy_fs.onSnapshot(query,callback)
+  return unsubscribe
 
 def write_batch():
   from .helper.batch import Batch

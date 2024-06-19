@@ -10,7 +10,7 @@ def init_firebase_server(skd_config,bucket_id=None,name='default'):
     app = firebase_admin.initialize_app(credentials.Certificate(skd_config),name=name)
     firestore_client = firestore.client(app=app)
     firestore_client._database_string_internal = (f"projects/letem-prod/databases/{name}")
-    return firestore.client(app=app)
+    return firestore_client
   else:
     app = firebase_admin.initialize_app(credentials.Certificate(skd_config),{'storageBucket': bucket_id},name=name)
     return firestore.client(app=app), storage.bucket()

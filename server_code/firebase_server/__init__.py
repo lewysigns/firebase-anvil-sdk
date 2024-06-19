@@ -8,10 +8,10 @@ def init_firebase_server(skd_config,bucket_id=None,name='default'):
 
   if bucket_id is None:
     firebase_admin.initialize_app(credentials.Certificate(skd_config),name=name)
-    return firestore.client()
+    return firestore.client(database=name)
   else:
     firebase_admin.initialize_app(credentials.Certificate(skd_config),{'storageBucket': bucket_id},name=name)
-    return firestore.client(), storage.bucket()
+    return firestore.client(database=name), storage.bucket()
 
 
 """

@@ -7,11 +7,11 @@ def init_firebase_server(skd_config,bucket_id=None,name='default'):
   from firebase_admin import credentials, firestore, storage
 
   if bucket_id is None:
-    firebase_admin.initialize_app(credentials.Certificate(skd_config),name=name)
-    return firestore.client(database=name)
+    app = firebase_admin.initialize_app(credentials.Certificate(skd_config),name=name)
+    return firestore.client(app=app)
   else:
-    firebase_admin.initialize_app(credentials.Certificate(skd_config),{'storageBucket': bucket_id},name=name)
-    return firestore.client(database=name), storage.bucket()
+    app = firebase_admin.initialize_app(credentials.Certificate(skd_config),{'storageBucket': bucket_id},name=name)
+    return firestore.client(app=app), storage.bucket()
 
 
 """

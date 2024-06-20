@@ -10,7 +10,7 @@ def init_firebase_server(skd_config,bucket_id=None,name='default',project_name=N
     try:
       firebase_admin.initialize_app(credentials.Certificate(skd_config),name=name)
     except ValueError as e:
-      if "The default Firebase app already exist" not in str(e):
+      if "already exist" not in str(e):
         raise e
     app = firebase_admin.get_app(name=name)
     print(app.name)

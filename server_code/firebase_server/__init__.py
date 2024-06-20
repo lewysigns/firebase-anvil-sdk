@@ -8,11 +8,11 @@ def init_firebase_server(skd_config,bucket_id=None,name='default',project_name=N
 
   if bucket_id is None:
     try:
-      firebase_admin.initialize_app(credentials.Certificate(skd_config),name=name)
+      app = firebase_admin.initialize_app(credentials.Certificate(skd_config),name=name)
     except ValueError as e:
       if "already exist" not in str(e):
         raise e
-    app = firebase_admin.get_app(name=name)
+      app = firebase_admin.get_app(name=name)
     print(app.name)
     firestore_client = firestore.client(app=app)
     if name != 'default':

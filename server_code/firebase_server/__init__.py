@@ -1,16 +1,22 @@
 import anvil.server
 
 
-def init_firebase_server(skd_config,bucket_id=None,name='default'):
+def init_firebase_server(skd_config,bucket_id=None,name='default',project_name=None):
   '''Intializes the serer side firestore sdk'''
   import firebase_admin
   from firebase_admin import credentials, firestore, storage
 
   if bucket_id is None:
-    app = firebase_admin.initialize_app(credentials.Certificate(skd_config),name=name)
+    try:
+      firebase_admin.initialize_app(credentials.Certificate(skd_config),name=name)
+    except ValueError as e:
+      if "The default Firebase app already exist" not in str(e):
+        raise e
+    app = firebase_admin.get_app(name=name)
+    print(app.name)
     firestore_client = firestore.client(app=app)
     if name != 'default':
-      firestore_client._database_string_internal = (f"projects/letem-dev/databases/{name}")
+      firestore_client._database_string_internal = (f"projects/{project_name}/databases/{name}")
     return firestore_client
   else:
     app = firebase_admin.initialize_app(credentials.Certificate(skd_config),{'storageBucket': bucket_id},name=name)

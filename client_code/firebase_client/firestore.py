@@ -152,6 +152,10 @@ def get_docs_from_cache(query):
 def get_collection_group(collection_id):
   return proxy_fs.collectionGroup(db,collection_id)
 
+def get_count_from_server(query):
+  snapshot = anvil.js.await_promise(proxy_fs.GetCountFromServer(query))
+  count = snapshot.data().count
+  return count
 
 def arrayUnion(element):
   if isinstance(element,list):

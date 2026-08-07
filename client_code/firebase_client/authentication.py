@@ -143,12 +143,16 @@ class FireUser:
     def get_id_token(self, force_refresh=False):
         from .helper import utility
 
-        return utility.from_proxy(self.proxy_user.getIdToken(force_refresh))
+        return utility.from_proxy(
+            anvil.js.await_promise(self.proxy_user.getIdToken(force_refresh))
+        )
 
     def get_id_token_result(self, force_refresh=False):
         from .helper import utility
 
-        return utility.from_proxy(self.proxy_user.getIdTokenResult(force_refresh))
+        return utility.from_proxy(
+            anvil.js.await_promise(self.proxy_user.getIdTokenResult(force_refresh))
+        )
 
     def __repr__(self):
         try:
